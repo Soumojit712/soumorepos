@@ -46,6 +46,8 @@ function fxt(){
         // alert("playing:" + music.src);
         song.textContent=musicplay[musicindex];
         artist.textContent=musicartist[musicindex];
+        music.play();
+        play.classList.replace("fa-play","fa-pause");
 }
 next.addEventListener("click",fxt);
 prev.addEventListener("click",()=>{
