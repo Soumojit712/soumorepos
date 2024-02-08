@@ -1,36 +1,60 @@
-import React, { useState } from 'react';
-import './App.css';
-import useClipboard from "react-use-clipboard";
+import React, { useState, useEffect } from 'react';
+import { useGlobalContext } from './context';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-function App() {
-  const[texttocopy,settexttocopy]=useState();
-  const [isCopied, setCopied] = useClipboard(texttocopy);
-  SpeechRecognition.startListening({ continuous: true , language:'en-IN'});
-  const { transcript , browserSupportsSpeechRecognition } = useSpeechRecognition();
+
+const Search = () => {
+  const { query, searchPost } = useGlobalContext();
+  const [inputValue, setInputValue] = useState(query || '');
+  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+
+  useEffect(() => {
+    SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
+    
+    return () => {
+      SpeechRecognition.stopListening();
+    };
+  }, []);
+
+  useEffect(() => {
+    setInputValue(transcript);
+  }, [transcript]);
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+    searchPost(e.target.value);
+  };
+
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
+
   return (
     <div>
-      <div className="container">
-        <h2>
-        Speech to text converter
-        </h2>
-        <br/>
-        <p>A react hook that converts from speech to text</p>
-        <div className='main-content' onClick={()=>settexttocopy(transcript)}>
-        {transcript}
+      <h1>SG Tech website</h1>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className='main-content'>
+          <input
+            type="text"
+            placeholder='search here'
+            value={inputValue}
+            onChange={handleChange}
+          />
         </div>
         <div className="btn-style">
-          <button onClick={setCopied}>
-            {isCopied ? "Copied" : "Copy to clipboard"}
-          </button>
+          <p>Microphone: {listening ? 'on' : 'off'}</p>
           <button onClick={SpeechRecognition.startListening}>Start listening</button>
-          <button onClick={SpeechRecognition.stopListening}>Stop listening</button>
+          <button onClick={()=>{
+            SpeechRecognition.stopListening();
+            searchPost(transcript);
+          }}>Stop listening</button>
+          <button onClick={()=>{
+            resetTranscript();
+            window.location.reload();
+          }}>Reset</button>
         </div>
-      </div>      
+      </form>
     </div>
   );
-}
+};
 
-export default App;
+export default Search;
