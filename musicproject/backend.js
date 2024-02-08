@@ -1,8 +1,8 @@
+musicplay=["sadi gali","haseeno ka deewana","banjara"];
+musicartist=["lehmber","Payal","Irfan"]
 let flag=0;
 let musicindex=0;
 let k=0;
-musicplay=["sadi gali","haseeno ka deewana","banjara"];
-musicartist=["lehmber","Payal","Irfan"]
 let music=document.querySelector('audio');
 let prev=document.getElementById("prev");
 let play=document.getElementById("play");
@@ -13,11 +13,16 @@ let img=document.getElementById("def");
 let cur=document.getElementById("current");
 let dur=document.getElementById("duration");
 let bar=document.getElementById("progress_bar");
+let volumeSlider = document.getElementById("volume-slider");
+volumeSlider.addEventListener('input', function() {
+  music.volume = parseFloat(this.value);
+});
 function playmusic(){
     music.play();
     play.classList.replace("fa-play","fa-pause");
     flag=1;
 }
+
 function stopmusic(){
     music.pause();
     play.classList.replace("fa-pause","fa-play");
