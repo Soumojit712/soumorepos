@@ -6,49 +6,45 @@
     background-color: rgb(23, 55, 198);
     box-sizing: border-box;
 }
-.track{
+.track,.artist,.song{
+    text-align: center;
     font-size: 2rem;
-    text-align: center;
-}
-.artist ,.song{
-    text-align: center;
-    font-size: 1rem;
-}
-.img{
-    text-align: center;
 }
 .music_control{
     text-align: center;
     font-size: 4rem;
 }
-.music_control i:hover {
-  transform: scale(1.1);
-}
-img{
+.img{
     border: 1px transparent white;
     border-radius: 10rem;
+    text-align: center;
 }
-.img img {
-  animation: rotate 5s linear infinite;
+#play:hover , #prev:hover , #next:hover{
+    opacity: 0.5;
 }
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+.volume-control {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  #volume-slider {
+    width: 40px;
+    background: #d3d3d3;
+    border: none;
+    outline: none;
+    height: 5px;
+    cursor: pointer;
   }
-}
-#prev:hover{
-    opacity: 0.5;
-}
-#play:hover{
-    opacity: 0.5;
-}
-#next:hover{
-    opacity: 0.5;
-}
+  
+  #volume-slider::-webkit-slider-thumb {
+    background: #2b04ed;
+    width: 15px;
+    height: 15px;
+    border-radius: 40%;
+    cursor: pointer;
+  }  
+  
 #progress_bar{
     box-sizing: border-box;
     box-shadow: 1rem;
@@ -56,7 +52,6 @@ img{
     border-radius: 10rem;
     width: 0%;
     height: 10px;
-    transition: width 0.2s ease-in-out;
     background-color: rgb(60, 255, 0);
 }
 #current{
